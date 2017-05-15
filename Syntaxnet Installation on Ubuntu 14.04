@@ -1,0 +1,96 @@
+Syntaxnet Installation :
+1.Requirements
+2.Steps
+3.Problems & Solutions
+
+1.Requirements
+  1.1 python version above 2
+  1.2 We can do with Java7 But Java 8 is preferable.
+  1.3 bazel latest version preferred. 0.4.3 is stable.
+  1.4 https://github.com/tensorflow/models (complete repo)
+  1.5 Cuda for GPU (not needed for when you use CPU )
+  
+2. Steps 
+
+  2.1 install bazel
+  2.2 Install dependencies 
+  2.3 Clone Syntaxnet repo
+  2.4 Bazel build  configuration
+  2.5 Run file or text
+  
+  
+  2.1 Install bazel (two ways of installation)
+    refer this : 
+   https://github.com/stephensebastin/Instructions-and-Explanations/blob/master/Bazel%20installation
+  
+  2.2 Install dependencies 
+    #swig:
+      $  sudo  apt-get install swig on Ubuntu
+
+    protocol buffers, with a version supported by TensorFlow:
+
+    #check your protobuf version with
+    $ sudo pip freeze | grep protobuf
+    #upgrade to a supported version with
+    $ sudo pip install -U protobuf==3.0.0b2
+
+    # mock, the testing package:
+
+    $ sudo pip install mock
+ 
+    # asciitree, to draw parse trees on the console for the demo:
+
+    $ sudo pip install asciitree
+
+    #numpy, package for scientific computing:
+  
+     $ sudo pip install numpy
+
+     #pygraphviz to visualize traces and parse trees:
+
+     $   sudo apt-get install -y graphviz libgraphviz-dev
+     $   sudo pip install pygraphviz --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/graphviz/"
+
+ 2.3 Clone Syntaxnet repo
+ 
+       #cloning repo
+       $ git clone --recursive https://github.com/tensorflow/models.git
+       #moving to the directory for config
+       $ cd models/syntaxnet/tensorflow
+
+
+2.4 Bazel build  configuration
+   
+       $ ./configure
+       #congfig   here you can provide the option you want . Press enter for all and choose default is recommended. 
+       $ cd ..
+   
+       $ bazel test ...
+       (if tests are failed try ran with sudo bazel test ...)
+       ( or )
+       $ sudo  bazel test syntaxnet/... util/utf8/...
+   # tests should not be failed    
+   
+      $ mkdir /tmp/syntaxnet_pkg
+      $ sudo  bazel-bin/dragnn/tools/build_pip_package --output-dir=/tmp/syntaxnet_pkg
+        
+      $  sudo pip install /tmp/syntaxnet_pkg/syntaxnet-x.xx-none-any.whl
+      
+          #  The filename of the .whl depends on your platform. press tab you came to know.
+          
+          
+    
+    2.5 Run file or text
+        echo 'Bob brought the pizza to Alice.' | syntaxnet/demo.sh
+
+                    Input: Bob brought the pizza to Alice .
+                    Parse:
+                    brought VBD ROOT
+                     +-- Bob NNP nsubj
+                     +-- pizza NN dobj
+                     |   +-- the DT det
+                     +-- to IN prep
+                     |   +-- Alice NNP pobj
+                     +-- . . punct     
+                     
+       #make sure demo.sh file got all permissions. else set give full access . 
