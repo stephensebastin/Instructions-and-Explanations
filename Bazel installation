@@ -1,0 +1,55 @@
+Requirement : Java 8 (preferred)
+
+
+Install bazel (two ways of installation)
+
+ a)  Using Bazel custom APT repository (recommended)
+
+            1. Add Bazel distribution URI as a package source (one time setup)
+
+           $ echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+            #the bazel repo deb package URL is added in source list. 
+            #If you want to use the JDK 7, please replace jdk1.8 with jdk1.7 and if you want to install the testing version of Bazel, replace stable with testing.
+
+           $ curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+            
+            
+            
+            #If you want to use the JDK 7, please replace jdk1.8 with jdk1.7 and if you want to install the testing version of Bazel, replace stable with testing.
+
+            2. Install and update Bazel
+
+            sudo apt-get update && sudo apt-get install bazel
+            
+            #Once installed, you can upgrade to newer version of Bazel with:
+
+           $ sudo apt-get upgrade bazel
+            
+    
+b)  Install with installer 
+
+         
+         1. #before that make sure your system has java 8 using ' java -version ' in terminal else upgrade or install java 8 by using 
+          $ sudo apt-get install openjdk-8-jdk
+
+         2. Install required packages.
+            $ sudo apt-get install pkg-config zip g++ zlib1g-dev unzip
+
+         3.  https://github.com/bazelbuild/bazel/releases
+          #check for the versions 
+          #download it (latest versions preferred . above 0.4.2 is good )
+          
+         4. 4. Run the installer
+
+            $  chmod +x bazel-<version>-installer-<os>.sh
+             #it makes file as executable. change your directory to where the file is downloaded else copy it into your home directory.
+            
+            $ ./bazel-<version>-installer-<os>.sh --user
+ 
+              #The --user flag installs Bazel to the $HOME/bin directory on your system and sets the .bazelrc path to $HOME/.bazelrc. Use the --help command to see additional installation options.
+            
+            $ export PATH="$PATH:$HOME/bin"
+              # else add it into ~/.bash.rc 
+              
+              
+       To check bazel is installed -> $ bazel version
